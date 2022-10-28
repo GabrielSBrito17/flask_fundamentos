@@ -1,4 +1,6 @@
-from flask import render_template
+import traceback
+
+from flask import render_template, redirect, url_for
 from app.forms import cliente_form
 from app import app, db
 
@@ -9,13 +11,10 @@ from app import app, db
 from app.models import cliente_model
 
 
-@app.route("/cadastrar_cliente", methods=["POST"])
+@app.route("/cadastrar_cliente", methods=["GET", "POST"])
 def cadastrar_cliente():
     form = cliente_form.ClienteForm()
-    print(form.errors)
-    print("chegou aqui")
     if form.validate_on_submit():
-        print("chegou aqui1")
         nome = form.nome.data
         email = form.email.data
         data_nascimento = form.data_nascimento.data
@@ -30,14 +29,18 @@ def cadastrar_cliente():
             sexo=sexo
             )
         try:
-            print("chegou aqui2")
             db.session.add(cliente)
             db.session.commit()
-            print("chegou aqui3")
+            return redirect(url_for("listar_clientes"))
         except:
             print("Cliente não cadastrado")
+            print(traceback.format_exc())
     else:
-        print(form.errors)
-        print("chegou aqui4")
+        print(traceback.format_exc())
 
     return render_template("clientes/form.html", form=form)
+
+@app.route("/listar_clientes", methods=["GET"])
+def listar_clientes():
+    clientes = cliente_model.Cliente.query.all()
+    return render_template("clientes/lista_clientes.html", clientes=clientes)
