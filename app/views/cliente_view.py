@@ -51,6 +51,7 @@ def listar_cliente(id):
 def editar_cliente(id):
     cliente_bd = cliente_service.listar_cliente(id)
     form = cliente_form.ClienteForm(obj=cliente_bd)
+    form.sexo.data = cliente_bd.sexo
     if form.validate_on_submit():
         nome = form.nome.data
         email = form.email.data

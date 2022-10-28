@@ -5,7 +5,6 @@ class Cliente(db.Model):
     __tablename__ = "clientes"
 
     SEXO_CHOICES = [
-        (u'N/A', u'Escolha uma alternativa'),
         (u'M', u'Masculino'),
         (u'F', u'Feminino'),
         (u'N', u'Nenhuma das opções')
