@@ -8,5 +8,7 @@ class ClienteForm(FlaskForm):
     email = EmailField("email", validators=[Email(), DataRequired()])
     data_nascimento = DateField("data_nascimento", validators=[DataRequired()])
     profissao = StringField("profissao", validators=[DataRequired()])
-    sexo = SelectField("sexo", validators=[DataRequired()], choices=[('F', 'Feminino'), ('M', 'Masculino'),
+    sexo = SelectField("sexo", validators=[DataRequired()], choices=[('N/A', 'Escolha uma alternativa'),
+                                                                     ('F', 'Feminino'),
+                                                                     ('M', 'Masculino'),
                                                                      ('N', 'Nenhuma das opções')])
